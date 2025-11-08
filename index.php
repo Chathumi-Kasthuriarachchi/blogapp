@@ -62,9 +62,8 @@ $username = $_SESSION['username'] ?? null;
   </section>
 
   <!-- Footer -->
-  <footer class="absolute bottom-4 text-gray-400 text-sm">
-    &copy; <?= date('Y') ?> BlogHaven — Crafted with 💜
-  </footer>
+    <?php include 'includes/footer.php'; ?>
+
 
   <!-- Modal (Login + Signup) -->
   <div id="authModal" class="fixed inset-0 bg-black/60 hidden flex justify-center items-center">

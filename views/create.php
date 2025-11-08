@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <!-- ✅ Styled Back Button -->
       <a href="blogs.php"
          class="bg-pink-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-pink-700 transition shadow-md">
-         👈 Back
+         👈 Back to Blogs
       </a>
 
       <h1 class="text-2xl font-semibold text-pink-300">Create Blog</h1>

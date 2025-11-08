@@ -1,6 +1,6 @@
 <?php
 require_once '../config/db.php';
-require_once '../config/parsedown-master/Parsedown.php';
+require_once '../config/parsedown-master/Parsedown.php';          // ✅ include markdown parser
 
 session_start();
 

@@ -1,8 +1,12 @@
 <?php
-$host = 'localhost';
-$dbname = 'blog_db';   // your real DB name here
-$username = 'root';        // XAMPP default
-$password = '';            // XAMPP default (empty)
+// Include env.php to load .env values
+require_once __DIR__ . '/env.php';
+
+// Get values from $_ENV
+$host     = $_ENV['DB_HOST'] ?? 'localhost';
+$dbname   = $_ENV['DB_NAME'] ?? '';
+$username = $_ENV['DB_USER'] ?? '';
+$password = $_ENV['DB_PASS'] ?? '';
 
 // ✅ Create PDO connection
 try {
