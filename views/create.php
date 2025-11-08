@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
 require_once '../config/db.php';
 session_start();
@@ -13,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $message = "";
 
-// ✅ Fetch user's profile picture
+//  Fetch user's profile picture
 $stmt = $conn->prepare("SELECT profile_pic FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -24,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $content = trim($_POST['content']);
   $image_paths = [];
 
-  // ✅ Handle multiple image uploads
+  //  Handle multiple image uploads
   if (!empty($_FILES['images']['name'][0])) {
     foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
       $type = $_FILES['images']['type'][$key];
@@ -40,12 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   try {
-    // ✅ Insert blog post
+    //  Insert blog post
     $stmt = $conn->prepare("INSERT INTO blogPost (user_id, title, content) VALUES (?, ?, ?)");
     $stmt->execute([$user_id, $title, $content]);
     $newPostId = $conn->lastInsertId();
 
-    // ✅ Insert all uploaded images
+    //  Insert all uploaded images
     if (!empty($image_paths)) {
       $imgStmt = $conn->prepare("INSERT INTO blog_images (post_id, image_path) VALUES (?, ?)");
       foreach ($image_paths as $path) {
@@ -153,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <nav class="bg-[#2e1065]/70 backdrop-blur-md border-b border-purple-700 shadow-lg sticky top-0 z-10">
     <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
 
-      <!-- ✅ Styled Back Button -->
+      <!--  Styled Back Button -->
       <a href="blogs.php"
          class="bg-pink-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-pink-700 transition shadow-md">
          👈 Back to Blogs
@@ -196,6 +194,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </main>
 
 </div>
+
+<!--  EasyMDE Editor Script -->
 
 <script>
   const editor = new EasyMDE({

@@ -161,7 +161,7 @@ if (!empty($images)) {
   </div>
 </nav>
 
-<!-- 🔍 Search Bar -->
+<!--  Search Bar -->
 <div class="max-w-3xl mx-auto px-4 mt-6">
   <form method="GET" class="flex gap-2">
     <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Search blogs by title, content, or author...">

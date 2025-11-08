@@ -13,7 +13,7 @@ $bid = intval($_GET['id']);
 $loggedIn = isset($_SESSION['user_id']);
 $user_id = $_SESSION['user_id'] ?? null;
 
-// 🔹 Fetch post with author
+//  Fetch post with author
 $stmt = $conn->prepare("
   SELECT bp.*, u.username 
   FROM blogpost bp
@@ -24,12 +24,12 @@ $stmt->execute([$bid]);
 $post = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$post) die("Post not found.");
 
-// 🔹 Fetch all images for this post (for gallery)
+// Fetch all images for this post (for gallery)
 $imgStmt = $conn->prepare("SELECT image_path FROM blog_images WHERE post_id = ?");
 $imgStmt->execute([$bid]);
 $images = $imgStmt->fetchAll(PDO::FETCH_COLUMN);
 
-// 🔹 Handle new comment
+// Handle new comment
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_text'])) {
   if (!$loggedIn) die("You must log in to comment.");
   $comment = trim($_POST['comment_text']);
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_text'])) {
   }
 }
 
-// 🔹 Handle likes
+// Handle likes
 if (isset($_POST['like_post']) && $loggedIn) {
   $check = $conn->prepare("SELECT * FROM likes WHERE post_id=? AND user_id=?");
   $check->execute([$bid, $user_id]);
@@ -54,7 +54,7 @@ if (isset($_POST['like_post']) && $loggedIn) {
   exit();
 }
 
-// 🔹 Fetch comments
+// Fetch comments
 $comments = $conn->prepare("
   SELECT c.*, u.username FROM comments c 
   JOIN users u ON c.user_id = u.id 
@@ -63,12 +63,12 @@ $comments = $conn->prepare("
 $comments->execute([$bid]);
 $all_comments = $comments->fetchAll(PDO::FETCH_ASSOC);
 
-// 🔹 Fetch like count
+// Fetch like count
 $countStmt = $conn->prepare("SELECT COUNT(*) AS totalLikes FROM likes WHERE post_id=?");
 $countStmt->execute([$bid]);
 $totalLikes = $countStmt->fetch(PDO::FETCH_ASSOC)['totalLikes'];
 
-// 🔹 Check if current user liked
+// Check if current user liked
 $userLiked = false;
 if ($loggedIn) {
   $chk = $conn->prepare("SELECT 1 FROM likes WHERE post_id=? AND user_id=?");
@@ -76,7 +76,7 @@ if ($loggedIn) {
   $userLiked = $chk->rowCount() > 0;
 }
 
-// 🔹 Get user profile image (for navbar)
+// Get user profile image (for navbar)
 $profilePic = '../uploads/default-avatar.png';
 if ($loggedIn && isset($_SESSION['user_id'])) {
   $stmt = $conn->prepare("SELECT profile_pic FROM users WHERE id=?");
@@ -230,7 +230,7 @@ if ($loggedIn && isset($_SESSION['user_id'])) {
       By <span class="font-semibold text-pink-400"><?= htmlspecialchars($post['username']) ?></span> • <?= date('F j, Y', strtotime($post['created_at'])) ?>
     </p>   
   
-  <!-- ✅ Normal Gallery (No Scroll, Click to View) -->
+  <!--  Normal Gallery (No Scroll, Click to View) -->
     <?php if (!empty($images)): ?>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
         <?php foreach ($images as $img): ?>
@@ -250,7 +250,7 @@ if ($loggedIn && isset($_SESSION['user_id'])) {
       <?= $Parsedown->text($post['content']) ?>
     </article>
 
-    <!-- ✅ Lightbox Modal -->
+    <!--  Lightbox Modal -->
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
       <img id="lightboxImage" src="" alt="Expanded Image">
     </div>

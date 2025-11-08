@@ -225,7 +225,7 @@ $user_posts = $posts->fetchAll(PDO::FETCH_ASSOC);
 
   <!-- Footer --> 
     <footer class="text-center text-gray-400 text-sm py-6 mt-10">
-      &copy; <?= date('Y') ?> BlogHaven — Crafted with 💜
+      &copy; <?= date('Y') ?> BlogHaven . All Rights Reserved.
     </footer>
 
   <script>lucide.createIcons();</script>

@@ -14,17 +14,17 @@ $post = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$post) die("Post not found.");
 if ($post['user_id'] != $_SESSION['user_id']) die("You can only edit your own posts.");
 
-// ✅ Fetch existing images for this blog
+//  Fetch existing images for this blog
 $imgStmt = $conn->prepare("SELECT imgid, image_path FROM blog_images WHERE post_id = ?");
 $imgStmt->execute([$bid]);
 $existingImages = $imgStmt->fetchAll(PDO::FETCH_ASSOC);
 
-// ✅ Handle form submission
+//  Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $title = trim($_POST['title']);
   $content = trim($_POST['content']);
 
-  // --- Delete selected images ---
+  //  Delete selected images 
   if (!empty($_POST['delete_images'])) {
     foreach ($_POST['delete_images'] as $imgPath) {
       $del = $conn->prepare("DELETE FROM blog_images WHERE post_id = ? AND image_path = ?");
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   }
 
-  // --- Update text content ---
+  //  Update text content 
   $stmt = $conn->prepare("UPDATE blogpost SET title=?, content=? WHERE bid=?");
   $stmt->execute([$title, $content, $bid]);
 
@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-  <!-- ✅ Navigation Bar -->
+  <!--  Navigation Bar -->
   <nav class="bg-[#2e1065]/70 backdrop-blur-md border-b border-purple-700 shadow-lg sticky top-0 z-10">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-4 py-3">
       <a href="blogs.php" class="bg-pink-600 text-white text-white px-4 py-2 rounded-lg hover:bg-pink-700 transition shadow-md">
@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <input type="text" name="title" value="<?= htmlspecialchars($post['title']) ?>" class="w-full rounded px-3 py-2" required>
         </div>
 
-        <!-- ✅ Show existing images -->
+        <!-- Show existing images -->
         <div>
           <label class="block text-sm mb-1 text-pink-200">Existing Images</label>
           <?php if (!empty($existingImages)): ?>

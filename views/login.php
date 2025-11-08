@@ -1,5 +1,5 @@
 <?php
-// views/login.php — Handle user login
+// Handle user login
 require_once '../config/db.php';
 session_start();
 
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($password, $user['password'])) {
-        // ✅ Login success
+        //  Login success
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
 
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: blogs.php");
         exit();
     } else {
-        // ❌ Invalid credentials
+        //  Invalid credentials
         header("Location: ../index.php?error=invalid");
         exit();
     }

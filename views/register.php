@@ -1,5 +1,5 @@
 <?php
-// views/register.php — Handle user registration
+// Handle user registration
 require_once '../config/db.php';
 session_start();
 
